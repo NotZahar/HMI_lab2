@@ -27,6 +27,9 @@ void Command::rename(const std::vector<std::pair<const QString, const QString>>&
         QString oldFilePath = currentDir.absolutePath() + "/" + renamePair.first;
         QString newFilePath = currentDir.absolutePath() + "/" + renamePair.second;
 
+        if (QFileInfo(oldFilePath).isDir()) throw QString(ErrorInfo::errorMessages.at(error::fileDoesntExist));
+        if (QFileInfo(newFilePath).isDir()) throw QString(ErrorInfo::errorMessages.at(error::renameIsImpossible));
+
         if (!QFile(oldFilePath).exists()) throw QString(ErrorInfo::errorMessages.at(error::fileDoesntExist));
         if (QFile(newFilePath).exists()) throw QString(ErrorInfo::errorMessages.at(error::fileAlreadyExists));
 

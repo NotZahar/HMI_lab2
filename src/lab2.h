@@ -18,13 +18,15 @@ namespace lab2 {
        enum class error : int {
            wrongPath,
            fileDoesntExist,
-           fileAlreadyExists
+           fileAlreadyExists,
+           renameIsImpossible
        };
 
        static inline const std::map<error, const QString> errorMessages{
            {error::wrongPath, "Неверный путь"},
            {error::fileDoesntExist, "Файл с таким именем не существует"},
-           {error::fileAlreadyExists, "Файл с таким именем уже существует"}
+           {error::fileAlreadyExists, "Файл с таким именем уже существует"},
+           {error::renameIsImpossible, "Невозможно переименовать"}
        };
     };
 

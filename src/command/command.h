@@ -26,7 +26,7 @@ public:
     void gtd(const QString& path);
     void rename(const std::vector<std::pair<const QString, const QString>>& renameList);
 
-private:
+public:
     QDir currentDir;
 };
 
