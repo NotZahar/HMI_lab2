@@ -16,8 +16,10 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(PROJECT_SOURCES
         src/main.cpp
-src/command/command.h src/command/command.cpp
+        src/command/command.h src/command/command.cpp
         src/lab2.h
+        src/CLI/cli.h src/CLI/cli.cpp
+        src/MenuI/menui.h src/MenuI/menui.cpp src/MenuI/menui.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

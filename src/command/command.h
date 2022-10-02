@@ -4,7 +4,6 @@
 #include <QString>
 #include <QDir>
 #include <QFile>
-#include <QDebug>
 #include <QFileInfoList>
 
 #include <map>

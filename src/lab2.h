@@ -19,14 +19,16 @@ namespace lab2 {
            wrongPath,
            fileDoesntExist,
            fileAlreadyExists,
-           renameIsImpossible
+           renameIsImpossible,
+           incorrectEntryInput
        };
 
        static inline const std::map<error, const QString> errorMessages{
            {error::wrongPath, "Неверный путь"},
            {error::fileDoesntExist, "Файл с таким именем не существует"},
            {error::fileAlreadyExists, "Файл с таким именем уже существует"},
-           {error::renameIsImpossible, "Невозможно переименовать"}
+           {error::renameIsImpossible, "Невозможно переименовать"},
+           {error::incorrectEntryInput, "Некорректный ввод, перезапустите программу"}
        };
     };
 
