@@ -53,6 +53,35 @@ void CLI::doGtd(const std::string& commandCandidate)
     }
 }
 
-void CLI::doRename(const std::string& commandCandidate) {
+void CLI::doRename(std::string& commandCandidate) {
+    std::vector<std::pair<const std::string, const std::string>> renameList;
+    std::regex regex_pair("\\/[^\\/]+\\/->\\/[^\\/]+\\/");
+    std::regex regex_first("\\/[^\\/]+\\/->");
+    std::regex regex_second("->\\/[^\\/]+\\/");
+    std::smatch matchPair;
+    std::smatch matchFirst;
+    std::smatch matchSecond;
+
+    commandCandidate = commandCandidate.substr(7);
+
+    while (true) {
+        if (std::regex_search(commandCandidate, matchPair, regex_pair)) {
+
+            std::string pair = matchPair.str();
+            std::regex_search(pair, matchFirst, regex_first);
+            std::regex_search(pair, matchSecond, regex_second);
+
+            std::string raw_path_first = matchFirst[0].str();
+            std::string raw_path_second = matchSecond[0].str();
+
+            std::cout << raw_path_first.substr(1, raw_path_first.size() - 4) << std::endl;
+            std::cout << raw_path_second.substr(3, raw_path_second.size() - 4) << std::endl << std::flush;
+
+            commandCandidate = commandCandidate.substr(pair.size());
+        } else {
+            break;
+        }
+   }
+
 
 }
