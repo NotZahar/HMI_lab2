@@ -10,6 +10,8 @@
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
+    MenuI* menuI = nullptr;
+
     std::cout << "Выберите вид пользовательского интерфейса:" << std::endl
               << "1.Командный режим" << std::endl
               << "2.Меню" << std::endl
@@ -26,7 +28,8 @@ int main(int argc, char *argv[]) {
         break;
     }
     case 2: {
-        MenuI menuI;
+        menuI = new MenuI("."); // memory leak
+        menuI->show();
         break;
     }
     default: {
