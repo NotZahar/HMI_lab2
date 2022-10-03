@@ -5,13 +5,22 @@
 #include <regex>
 
 #include "../lab2.h"
+#include "../command/command.h"
 
 class CLI
 {
 public:
-    CLI() = default;
+    CLI(const std::string& path);
 
     void start();
+
+private:
+    void doScd();
+    void doGtd(const std::string& commandCandidate);
+    void doRename(const std::string& commandCandidate);
+
+private:
+    Command command;
 };
 
 #endif // CLI_H

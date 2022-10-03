@@ -20,8 +20,9 @@ int main(int argc, char *argv[]) {
 
     switch (choice) {
     case 1: {
-        CLI cli;
+        CLI cli(".");
         cli.start();
+        exit(EXIT_SUCCESS);
         break;
     }
     case 2: {
@@ -29,7 +30,7 @@ int main(int argc, char *argv[]) {
         break;
     }
     default: {
-        std::cout << lab2::ErrorInfo::errorMessages.at(lab2::ErrorInfo::error::incorrectEntryInput).toStdString() << std::endl << std::flush;
+        std::cout << lab2::ErrorInfo::errorMessages.at(lab2::ErrorInfo::error::incorrectEntryInput) << std::endl << std::flush;
         exit(EXIT_SUCCESS);
         break;
     }

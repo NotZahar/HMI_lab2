@@ -12,20 +12,21 @@
 
 #include "../lab2.h"
 
-using fileFormat = lab2::fileFormat;
+using fileFormat = lab2::FileInfo::fileFormat;
 using ErrorInfo = lab2::ErrorInfo;
-using error = ErrorInfo::error;
 
 class Command {
 public:
     Command() = delete;
-    explicit Command(QString path);
+    explicit Command(const std::string& path);
 
-    std::map<const QString, fileFormat> scd();
-    void gtd(const QString& path);
-    void rename(const std::vector<std::pair<const QString, const QString>>& renameList);
+    std::map<const std::string, fileFormat> scd();
+    void gtd(const std::string& path);
+    void rename(const std::vector<std::pair<const std::string, const std::string>>& renameList);
 
-public:
+    std::string getCurrentDirPath();
+
+private:
     QDir currentDir;
 };
 
