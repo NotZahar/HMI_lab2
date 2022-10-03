@@ -28,11 +28,11 @@ void Command::rename(const std::vector<std::pair<const std::string, const std::s
         QString oldFilePath = currentDir.absolutePath() + "/" + QString::fromStdString(renamePair.first);
         QString newFilePath = currentDir.absolutePath() + "/" + QString::fromStdString(renamePair.second);
 
-        if (QFileInfo(oldFilePath).isDir()) throw std::string(ErrorInfo::errorMessages.at(ErrorInfo::error::fileDoesntExist));
-        if (QFileInfo(newFilePath).isDir()) throw std::string(ErrorInfo::errorMessages.at(ErrorInfo::error::renameIsImpossible));
+        if (QFileInfo(oldFilePath).isDir()) throw std::string(ErrorInfo::errorMessages.at(ErrorInfo::error::fileDoesntExist) + ": " + renamePair.first);
+        if (QFileInfo(newFilePath).isDir()) throw std::string(ErrorInfo::errorMessages.at(ErrorInfo::error::renameIsImpossible) + " в " + renamePair.second);
 
-        if (!QFile(oldFilePath).exists()) throw std::string(ErrorInfo::errorMessages.at(ErrorInfo::error::fileDoesntExist));
-        if (QFile(newFilePath).exists()) throw std::string(ErrorInfo::errorMessages.at(ErrorInfo::error::fileAlreadyExists));
+        if (!QFile(oldFilePath).exists()) throw std::string(ErrorInfo::errorMessages.at(ErrorInfo::error::fileDoesntExist) + ": " + renamePair.first);
+        if (QFile(newFilePath).exists()) throw std::string(ErrorInfo::errorMessages.at(ErrorInfo::error::fileAlreadyExists) + ": " + renamePair.second);
 
         QFile::rename(oldFilePath, newFilePath);
     }

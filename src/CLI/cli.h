@@ -16,7 +16,7 @@ public:
 
 private:
     void doScd();
-    void doGtd(const std::string& commandCandidate);
+    void doGtd(std::string& commandCandidate);
     void doRename(std::string& commandCandidate);
 
 private:

@@ -38,7 +38,7 @@ void CLI::doScd() {
     for (const auto& fileInfo : command.scd()) std::cout << lab2::FileInfo::fileType.at(fileInfo.second) << "  " << fileInfo.first << std::endl << std::flush;
 }
 
-void CLI::doGtd(const std::string& commandCandidate)
+void CLI::doGtd(std::string& commandCandidate)
 {
     std::regex regex_path("\\/[^\\/]+\\/");
     std::smatch match;
@@ -62,7 +62,7 @@ void CLI::doRename(std::string& commandCandidate) {
     std::smatch matchFirst;
     std::smatch matchSecond;
 
-    commandCandidate = commandCandidate.substr(7);
+    commandCandidate = commandCandidate.substr(7); // "rename "
 
     while (true) {
         if (std::regex_search(commandCandidate, matchPair, regex_pair)) {
@@ -74,8 +74,8 @@ void CLI::doRename(std::string& commandCandidate) {
             std::string raw_path_first = matchFirst[0].str();
             std::string raw_path_second = matchSecond[0].str();
 
-            std::cout << raw_path_first.substr(1, raw_path_first.size() - 4) << std::endl;
-            std::cout << raw_path_second.substr(3, raw_path_second.size() - 4) << std::endl << std::flush;
+            renameList.push_back({raw_path_first.substr(1, raw_path_first.size() - 4),
+                                 raw_path_second.substr(3, raw_path_second.size() - 4)});
 
             commandCandidate = commandCandidate.substr(pair.size());
         } else {
@@ -83,5 +83,9 @@ void CLI::doRename(std::string& commandCandidate) {
         }
    }
 
-
+    try {
+        command.rename(renameList);
+    }  catch (std::string& msg) {
+        std::cout << msg;
+    }
 }
