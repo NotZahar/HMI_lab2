@@ -2,9 +2,10 @@
 #include "ui_menui.h"
 
 MenuI::MenuI(const std::string& path, QWidget *parent) :
-    command(path),
     QWidget(parent),
+    command(path),
     dirModel(new QStandardItemModel),
+    renameWindow(nullptr),
     ui(new Ui::MenuI)
 {
     ui->setupUi(this);
@@ -63,5 +64,21 @@ void MenuI::doGtd(bool c) {
 }
 
 void MenuI::doRename(bool c) {
+    std::vector<QString> oldNames;
 
+    for (const auto& index : ui->tableView->selectionModel()->selectedIndexes()) {
+        if (index.column() == 0) {
+            oldNames.push_back(index.data().toString());
+        } else {
+            QMessageBox::critical(nullptr, "Ошибка", QString::fromStdString(ErrorInfo::errorMessages.at(ErrorInfo::error::renameIsImpossible)));
+            return;
+        }
+    }
+
+    if (oldNames.empty()) {
+        return;
+    }
+
+    renameWindow = new RenameWindow(oldNames);
+    renameWindow->show();
 }

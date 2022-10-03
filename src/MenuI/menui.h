@@ -11,6 +11,7 @@
 #include <iostream>
 
 #include "../command/command.h"
+#include "renamewindow.h"
 
 namespace Ui {
 class MenuI;
@@ -33,6 +34,7 @@ private:
     Command command;
 
     QStandardItemModel* dirModel;
+    RenameWindow* renameWindow;
     Ui::MenuI* ui;
 };
 

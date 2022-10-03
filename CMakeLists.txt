@@ -20,6 +20,7 @@ set(PROJECT_SOURCES
         src/lab2.h
         src/CLI/cli.h src/CLI/cli.cpp
         src/MenuI/menui.h src/MenuI/menui.cpp src/MenuI/menui.ui
+        src/MenuI/renamewindow.h src/MenuI/renamewindow.cpp src/MenuI/renamewindow.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
