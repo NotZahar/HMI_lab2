@@ -26,9 +26,10 @@ public:
     ~MenuI();
 
 private slots:
-    void doScd(bool c);
-    void doGtd(bool c);
-    void doRename(bool c);
+    void doScd(bool);
+    void doGtd(bool);
+    void doRename(std::vector<std::pair<const std::string, const std::string>> renameList);
+    void collectRenameData(bool);
 
 private:
     Command command;

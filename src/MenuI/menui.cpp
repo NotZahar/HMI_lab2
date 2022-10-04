@@ -22,14 +22,15 @@ MenuI::MenuI(const std::string& path, QWidget *parent) :
 
     QObject::connect(ui->pushButton, &QPushButton::clicked, this, &MenuI::doScd);
     QObject::connect(ui->pushButton_2, &QPushButton::clicked, this, &MenuI::doGtd);
-    QObject::connect(ui->pushButton_3, &QPushButton::clicked, this, &MenuI::doRename);
+    QObject::connect(ui->pushButton_3, &QPushButton::clicked, this, &MenuI::collectRenameData);
 }
 
 MenuI::~MenuI() {
+    delete dirModel;
     delete ui;
 }
 
-void MenuI::doScd(bool c) {
+void MenuI::doScd(bool) {
     dirModel->clear();
 
     std::map<const std::string, fileFormat> dir = command.scd();
@@ -46,7 +47,7 @@ void MenuI::doScd(bool c) {
     }
 }
 
-void MenuI::doGtd(bool c) {
+void MenuI::doGtd(bool) {
     QModelIndex currentIndex = ui->tableView->currentIndex();
     QVariant currentData = dirModel->data(currentIndex);
 
@@ -63,7 +64,23 @@ void MenuI::doGtd(bool c) {
     }
 }
 
-void MenuI::doRename(bool c) {
+void MenuI::doRename(std::vector<std::pair<const std::string, const std::string>> renameList) {
+    delete renameWindow;
+
+    try {
+        command.rename(renameList);
+    }  catch (std::string& msg) {
+        QMessageBox::critical(nullptr, "Ошибка", QString::fromStdString(msg));
+    }
+
+    doScd(true);
+    ui->pushButton_3->setEnabled(true);
+}
+
+void MenuI::collectRenameData(bool) {
+    if (ui->tableView->selectionModel()->selectedIndexes().isEmpty()) return;
+    ui->pushButton_3->setEnabled(false);
+
     std::vector<QString> oldNames;
 
     for (const auto& index : ui->tableView->selectionModel()->selectedIndexes()) {
@@ -71,6 +88,7 @@ void MenuI::doRename(bool c) {
             oldNames.push_back(index.data().toString());
         } else {
             QMessageBox::critical(nullptr, "Ошибка", QString::fromStdString(ErrorInfo::errorMessages.at(ErrorInfo::error::renameIsImpossible)));
+            ui->pushButton_3->setEnabled(true);
             return;
         }
     }
@@ -80,5 +98,6 @@ void MenuI::doRename(bool c) {
     }
 
     renameWindow = new RenameWindow(oldNames);
+    QObject::connect(renameWindow, &RenameWindow::renameButtonWasPushed, this, &MenuI::doRename);
     renameWindow->show();
 }

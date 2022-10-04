@@ -2,8 +2,13 @@
 #define RENAMEWINDOW_H
 
 #include <QWidget>
+#include <QStandardItemModel>
+#include <QPushButton>
 
 #include <vector>
+#include <string>
+#include <utility>
+#include <iostream>
 
 namespace Ui {
 class RenameWindow;
@@ -17,8 +22,15 @@ public:
     explicit RenameWindow(const std::vector<QString>& oldNames, QWidget *parent = nullptr);
     ~RenameWindow();
 
+signals:
+    void renameButtonWasPushed(std::vector<std::pair<const std::string, const std::string>> renameList);
+
+private slots:
+    void renameButtonIsPushed(bool c);
+
 private:
-    Ui::RenameWindow *ui;
+    QStandardItemModel* renameModel;
+    Ui::RenameWindow* ui;
 };
 
 #endif // RENAMEWINDOW_H
