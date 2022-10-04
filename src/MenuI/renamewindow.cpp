@@ -8,6 +8,10 @@ RenameWindow::RenameWindow(const std::vector<QString>& oldNames, QWidget *parent
 {
     ui->setupUi(this);
 
+    this->setWindowFlags(this->windowFlags()
+                         & ~Qt::WindowMaximizeButtonHint
+                         & ~Qt::WindowCloseButtonHint);
+
     ui->tableView->setShowGrid(true);
     ui->tableView->verticalHeader()->setVisible(false);
 
@@ -26,6 +30,7 @@ RenameWindow::RenameWindow(const std::vector<QString>& oldNames, QWidget *parent
     }
 
     QObject::connect(ui->pushButton, &QPushButton::clicked, this, &RenameWindow::renameButtonIsPushed);
+    QObject::connect(ui->pushButton_2, &QPushButton::clicked, this, &RenameWindow::cancelButtonIsPushed);
 }
 
 RenameWindow::~RenameWindow() {
@@ -33,7 +38,7 @@ RenameWindow::~RenameWindow() {
     delete ui;
 }
 
-void RenameWindow::renameButtonIsPushed(bool c) {
+void RenameWindow::renameButtonIsPushed(bool) {
     std::vector<std::pair<const std::string, const std::string>> renameList;
 
     int rowCount = renameModel->rowCount();
@@ -43,4 +48,8 @@ void RenameWindow::renameButtonIsPushed(bool c) {
     }
 
     emit renameButtonWasPushed(renameList);
+}
+
+void RenameWindow::cancelButtonIsPushed(bool) {
+    emit cancelButtonWasPushed();
 }

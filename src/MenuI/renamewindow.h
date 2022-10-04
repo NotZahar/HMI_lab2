@@ -24,9 +24,11 @@ public:
 
 signals:
     void renameButtonWasPushed(std::vector<std::pair<const std::string, const std::string>> renameList);
+    void cancelButtonWasPushed();
 
 private slots:
-    void renameButtonIsPushed(bool c);
+    void renameButtonIsPushed(bool);
+    void cancelButtonIsPushed(bool);
 
 private:
     QStandardItemModel* renameModel;

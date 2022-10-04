@@ -11,7 +11,6 @@ void CLI::start() {
     const std::regex regex_exit("^q$");
 
     std::string commandCandidate;
-    std::getline(std::cin, commandCandidate);
 
     while (true) {
         std::cout << command.getCurrentDirPath() << " > " << std::flush;

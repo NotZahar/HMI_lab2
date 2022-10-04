@@ -10,6 +10,8 @@ MenuI::MenuI(const std::string& path, QWidget *parent) :
 {
     ui->setupUi(this);
 
+    this->setWindowFlags(this->windowFlags() & ~Qt::WindowMaximizeButtonHint);
+
     ui->label->setText(QString::fromStdString(command.getCurrentDirPath()));
 
     ui->tableView->setShowGrid(true);
@@ -74,12 +76,13 @@ void MenuI::doRename(std::vector<std::pair<const std::string, const std::string>
     }
 
     doScd(true);
-    ui->pushButton_3->setEnabled(true);
+    enableWindow();
 }
 
 void MenuI::collectRenameData(bool) {
     if (ui->tableView->selectionModel()->selectedIndexes().isEmpty()) return;
-    ui->pushButton_3->setEnabled(false);
+
+    disableWindow();
 
     std::vector<QString> oldNames;
 
@@ -88,7 +91,7 @@ void MenuI::collectRenameData(bool) {
             oldNames.push_back(index.data().toString());
         } else {
             QMessageBox::critical(nullptr, "Ошибка", QString::fromStdString(ErrorInfo::errorMessages.at(ErrorInfo::error::renameIsImpossible)));
-            ui->pushButton_3->setEnabled(true);
+            enableWindow();
             return;
         }
     }
@@ -99,5 +102,25 @@ void MenuI::collectRenameData(bool) {
 
     renameWindow = new RenameWindow(oldNames);
     QObject::connect(renameWindow, &RenameWindow::renameButtonWasPushed, this, &MenuI::doRename);
+    QObject::connect(renameWindow, &RenameWindow::cancelButtonWasPushed, this, &MenuI::cancelRename);
     renameWindow->show();
+}
+
+void MenuI::cancelRename() {
+    delete renameWindow;
+
+    doScd(true);
+    enableWindow();
+}
+
+void MenuI::disableWindow() {
+    this->setEnabled(false);
+    this->setWindowFlags(this->windowFlags() & ~Qt::WindowCloseButtonHint);
+    this->show();
+}
+
+void MenuI::enableWindow() {
+    this->setEnabled(true);
+    this->setWindowFlags(this->windowFlags() | Qt::WindowCloseButtonHint);
+    this->show();
 }

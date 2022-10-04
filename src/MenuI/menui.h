@@ -8,7 +8,6 @@
 #include <QMessageBox>
 
 #include <string>
-#include <iostream>
 
 #include "../command/command.h"
 #include "renamewindow.h"
@@ -30,6 +29,11 @@ private slots:
     void doGtd(bool);
     void doRename(std::vector<std::pair<const std::string, const std::string>> renameList);
     void collectRenameData(bool);
+    void cancelRename();
+
+private:
+    void disableWindow();
+    void enableWindow();
 
 private:
     Command command;
