@@ -1,5 +1,7 @@
 Lab work for human-machine interface class - working with filesystem (homemade terminal or UI)
 
+CLI - if defined C variable (macro) in main.cpp, UI - if M (default: C)
+
 CLI (terminal): 
     
     scd (scd) - show current dir
