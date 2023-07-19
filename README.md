@@ -13,4 +13,5 @@ CLI (terminal):
 ![CLI](demo/screenCLI.png)
 
 UI: 
+
 ![UI](demo/screenUI.png)
